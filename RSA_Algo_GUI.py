@@ -1,4 +1,4 @@
 import asyncio
 import PySide6
 
-window = PySide6
+window = pow()
