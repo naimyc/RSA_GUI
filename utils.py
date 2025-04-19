@@ -27,7 +27,7 @@ def modinv(a, m):
         raise Exception("Kein modulares Inverses")
     return x % m
 
-def MillerRabin(p):
+async def MillerRabin(p):
     # Miller-Rabin Primalitätstest (probabilistisch).
     # → Testet, ob p wahrscheinlich eine Primzahl ist.
     # → Wird verwendet zur schnellen Generierung großer Primzahlen in der Kryptografie.
@@ -59,14 +59,14 @@ def MillerRabin(p):
         r -= 1
     return False
 
-def generate_large_prime(bits):
+async def generate_large_prime(bits):
     # Generiert eine große Primzahl
     # Versucht Zufallszahlen im Bereich [bits // 2, bits], bis der Miller-Rabin-Test sie akzeptiert.
     # Wird bei RSA zur Erzeugung der Primzahlen p und q verwendet.
     
     while True:
         candidate = randint(2**(bits - 1), 2**bits - 1)  # Zufallszahl im Bereich [2^(bits-1), 2^bits - 1]
-        if MillerRabin(candidate):
+        if await MillerRabin(candidate):
             return candidate
         
 def hash(msg, n):

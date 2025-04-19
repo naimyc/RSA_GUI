@@ -1,6 +1,6 @@
 from utils import *
 
-def generate(key_size = 1024):
+async def generate(key_size = 1024):
     # Generiert ein RSA Schlüsselpaar.
     # Args:
         # key_size (int): Die Die Bitlänge des Modulus N (Standard: 1024 Bit)
@@ -9,8 +9,8 @@ def generate(key_size = 1024):
         #  tupel [(e, N), (d, N)] mit Public Key und Private Key
     
     bit_length = key_size // 2  # Hälfte für jede Primzahl
-    p, q = generate_large_prime(bit_length), generate_large_prime(bit_length)
-    while p == q: generate_large_prime(bit_length) # sicherstellen, dass p != q
+    p, q = await generate_large_prime(bit_length), await generate_large_prime(bit_length)
+    while p == q: await generate_large_prime(bit_length) # sicherstellen, dass p != q
     
     N = p * q           # Modulus
     PHI_N = (p - 1) * (q - 1) # Eulerschen Phi-Funktion
@@ -26,7 +26,7 @@ def generate(key_size = 1024):
     
     return [(e, N), (d, N)]
 
-def encrypt(message, public_key):
+async def encrypt(message, public_key):
     # Verschlüsselt eine Nachricht mit dem öffentlichen Schlüssel
     
     # Args:
@@ -40,7 +40,7 @@ def encrypt(message, public_key):
     cypher_block = [pow(ord(m), e, N) for m in message]
     return cypher_block
 
-def decrypt(cypher_text, private_key):
+async def decrypt(cypher_text, private_key):
     # Entschlüsselt verschlüsselte Blöcke mit dem privaten Schlüssel
     
     # Args:
@@ -57,7 +57,7 @@ def decrypt(cypher_text, private_key):
         
     return message
 
-def sign(message, private_key):
+async def sign(message, private_key):
     # Erstellt eine digitale Signatur der Nachricht.
 
     # Args:
@@ -73,7 +73,7 @@ def sign(message, private_key):
     signature = pow(hashed_message, d, N)
     return signature
 
-def verify(message, signature, public_key):
+async def verify(message, signature, public_key):
     # Überprüft eine digitale Signatur.
     
     # Args:
