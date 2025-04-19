@@ -1,0 +1,7 @@
+{
+    "files": [
+        "rsapp.py",
+        "form.ui",
+        "methods.qml"
+    ]
+}
