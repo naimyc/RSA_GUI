@@ -10,7 +10,8 @@ async def generate(key_size = 1024):
     
     bit_length = key_size // 2  # Hälfte für jede Primzahl
     p, q = await generate_large_prime(bit_length), await generate_large_prime(bit_length)
-    while p == q: await generate_large_prime(bit_length) # sicherstellen, dass p != q
+    while p == q:
+        await generate_large_prime(bit_length) # sicherstellen, dass p != q
     
     N = p * q           # Modulus
     PHI_N = (p - 1) * (q - 1) # Eulerschen Phi-Funktion
@@ -38,6 +39,7 @@ async def encrypt(message, public_key):
        
     e, N = public_key
     cypher_block = [pow(ord(m), e, N) for m in message]
+    print(cypher_block)
     return cypher_block
 
 async def decrypt(cypher_text, private_key):
